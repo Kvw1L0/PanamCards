@@ -1,7 +1,0 @@
-<!DOCTYPE html>
-<html lang="es">
-<head><meta charset="UTF-8"/><title>Bienvenido</title><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<style>body{background:black;color:white;display:flex;justify-content:center;align-items:center;flex-direction:column;height:100vh;margin:0;font-family:sans-serif;}input,button{padding:1rem;font-size:1.2rem;margin-top:1rem;}</style></head><body>
-<h1>¿Cómo te llamas?</h1><input id="nameInput" placeholder="Tu nombre"/><button onclick="guardarNombre()">Siguiente</button>
-<script>function guardarNombre(){const n=document.getElementById('nameInput').value.trim();if(n){localStorage.setItem('nombre',n);window.location.href='selfie.html';}}</script>
-</body></html>
