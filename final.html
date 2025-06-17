@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tarjeta Final</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs">
+    function reproducirLocucion() {
+      const nombre = localStorage.getItem("nombre") || "Jugador Leyenda";
+      const mensaje = new SpeechSynthesisUtterance(`¡Y aquí está ${nombre}, con una tarjeta de leyenda!`);
+      mensaje.lang = "es-CL";
+      mensaje.rate = 0.9;
+      window.speechSynthesis.speak(mensaje);
+    }
+
+    function compartirInstagram() {
+      const mensaje = encodeURIComponent("¡Mira mi tarjeta All-Stats de leyenda creada en el stand de Panam! 🏉🔥");
+      const url = encodeURIComponent(window.location.href);
+      const instagram = `https://www.instagram.com/?url=${url}&text=${mensaje}`;
+      window.open(instagram, '_blank');
+    }
+    </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix">
+    function reproducirLocucion() {
+      const nombre = localStorage.getItem("nombre") || "Jugador Leyenda";
+      const mensaje = new SpeechSynthesisUtterance(`¡Y aquí está ${nombre}, con una tarjeta de leyenda!`);
+      mensaje.lang = "es-CL";
+      mensaje.rate = 0.9;
+      window.speechSynthesis.speak(mensaje);
+    }
+
+    function compartirInstagram() {
+      const mensaje = encodeURIComponent("¡Mira mi tarjeta All-Stats de leyenda creada en el stand de Panam! 🏉🔥");
+      const url = encodeURIComponent(window.location.href);
+      const instagram = `https://www.instagram.com/?url=${url}&text=${mensaje}`;
+      window.open(instagram, '_blank');
+    }
+    </script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js">
+    function reproducirLocucion() {
+      const nombre = localStorage.getItem("nombre") || "Jugador Leyenda";
+      const mensaje = new SpeechSynthesisUtterance(`¡Y aquí está ${nombre}, con una tarjeta de leyenda!`);
+      mensaje.lang = "es-CL";
+      mensaje.rate = 0.9;
+      window.speechSynthesis.speak(mensaje);
+    }
+
+    function compartirInstagram() {
+      const mensaje = encodeURIComponent("¡Mira mi tarjeta All-Stats de leyenda creada en el stand de Panam! 🏉🔥");
+      const url = encodeURIComponent(window.location.href);
+      const instagram = `https://www.instagram.com/?url=${url}&text=${mensaje}`;
+      window.open(instagram, '_blank');
+    }
+    </script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background-color: black;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 2rem;
+      height: 100vh;
+    }
+    #card {
+      position: relative;
+      width: 492px;
+      height: 764px;
+      background-image: url('card_panam_bg_v2.png');
+      background-size: cover;
+      background-position: center;
+    }
+    #avatar {
+  top: 170px;
+  left: 135px;
+  width: 224px;
+  height: 224px;
+      position: absolute;
+      top: 160px;
+      left: 134px;
+      width: 224px;
+      height: 224px;
+      object-fit: contain;
+    }
+    .stat {
+      position: absolute;
+      font-size: 32px;
+      font-weight: bold;
+      color: white;
+      left: 320px;
+    }
+    #stat1 { top: 538px; left: 340px; }
+    #stat2 { top: 578px; left: 340px; }
+    #stat3 { top: 618px; left: 340px; }
+
+    #downloadBtn {
+      margin-top: 1rem;
+      background: #FFD700;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  
+    #preloader {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: black;
+      z-index: 999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      flex-wrap: wrap;
+    }
+
+    .ball {
+      width: 60px;
+      height: 40px;
+      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Rugby_ball_Transparent.svg/1024px-Rugby_ball_Transparent.svg.png') no-repeat center/contain;
+      position: absolute;
+      animation: float 3s ease-in-out forwards;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+    
+    #card {
+      animation: entradaEpica 1s ease-out forwards;
+      opacity: 0;
+      transform: translateY(100px) scale(0.95);
+      box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0.4);
+      border-radius: 20px;
+    }
+
+    @keyframes entradaEpica {
+      0% {
+        opacity: 0;
+        transform: translateY(100px) scale(0.95);
+        box-shadow: 0 0 0 rgba(0,0,0,0);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        box-shadow: 0 0 25px 10px rgba(255, 215, 0, 0.6);
+      }
+    }
+
+    #shareBtn {
+      margin-top: 1rem;
+      background: #e1306c;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    </style>
+
+
+</head>
+<body onload="iniciarPreloader()">
+  <h2>Tu Tarjeta Final</h2>
+  <div id="card">
+    <img id="avatar" />
+    <div class="stat" id="stat1"></div>
+    <div class="stat" id="stat2"></div>
+    <div class="stat" id="stat3"></div>
+  </div>
+  <button id="shareBtn" onclick="compartirInstagram()">📤 Compartir en Instagram</button><br><button id="downloadBtn" onclick="descargar()">⬇️ Descargar</button>
+
+  <canvas id="sourceCanvas" width="300" height="300" style="display:none;"></canvas>
+
+  <script>
+    async function renderTarjeta() {
+      const avatar = document.getElementById('avatar');
+      const canvas = document.getElementById('sourceCanvas');
+      const ctx = canvas.getContext('2d');
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = async () => {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        const net = await bodyPix.load();
+        const segmentation = await net.segmentPerson(canvas);
+        const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+        const data = imageData.data;
+
+        for (let i = 0; i < data.length; i += 4) {
+          const n = i / 4;
+          if (!segmentation.data[n]) data[i + 3] = 0;
+        }
+
+        ctx.putImageData(imageData, 0, 0);
+        avatar.src = canvas.toDataURL();
+      };
+      img.src = localStorage.getItem('foto');
+
+      document.getElementById('stat1').innerText = localStorage.getItem('d1');
+      document.getElementById('stat2').innerText = localStorage.getItem('d2');
+      document.getElementById('stat3').innerText = localStorage.getItem('d3');
+    }
+
+    function descargar() {
+      html2canvas(document.getElementById('card')).then(canvas => {
+        const a = document.createElement('a');
+        a.download = 'tarjeta_panam_final.png';
+        a.href = canvas.toDataURL();
+        a.click();
+      });
+    }
+  
+    function reproducirLocucion() {
+      const nombre = localStorage.getItem("nombre") || "Jugador Leyenda";
+      const mensaje = new SpeechSynthesisUtterance(`¡Y aquí está ${nombre}, con una tarjeta de leyenda!`);
+      mensaje.lang = "es-CL";
+      mensaje.rate = 0.9;
+      window.speechSynthesis.speak(mensaje);
+    }
+
+    function compartirInstagram() {
+      const mensaje = encodeURIComponent("¡Mira mi tarjeta All-Stats de leyenda creada en el stand de Panam! 🏉🔥");
+      const url = encodeURIComponent(window.location.href);
+      const instagram = `https://www.instagram.com/?url=${url}&text=${mensaje}`;
+      window.open(instagram, '_blank');
+    }
+    </script>
+
+
+<div id="preloader"></div>
+
+<script>
+  async function iniciarPreloader() {
+    const preloader = document.getElementById('preloader');
+    for (let i = 0; i < 15; i++) {
+      const ball = document.createElement('div');
+      ball.className = 'ball';
+      ball.style.left = Math.random() * window.innerWidth + 'px';
+      ball.style.top = Math.random() * window.innerHeight + 'px';
+      preloader.appendChild(ball);
+    }
+    setTimeout(() => {
+      preloader.style.display = 'none';
+      
+    renderTarjeta();
+    reproducirLocucion();
+    
+    }, 3000);
+  }
+
+    function reproducirLocucion() {
+      const nombre = localStorage.getItem("nombre") || "Jugador Leyenda";
+      const mensaje = new SpeechSynthesisUtterance(`¡Y aquí está ${nombre}, con una tarjeta de leyenda!`);
+      mensaje.lang = "es-CL";
+      mensaje.rate = 0.9;
+      window.speechSynthesis.speak(mensaje);
+    }
+
+    function compartirInstagram() {
+      const mensaje = encodeURIComponent("¡Mira mi tarjeta All-Stats de leyenda creada en el stand de Panam! 🏉🔥");
+      const url = encodeURIComponent(window.location.href);
+      const instagram = `https://www.instagram.com/?url=${url}&text=${mensaje}`;
+      window.open(instagram, '_blank');
+    }
+    </script>
+
+</body>
+
+</html>
