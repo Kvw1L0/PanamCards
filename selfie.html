@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<title>Selfie</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+  body { margin:0; background:black; color:white; font-family:sans-serif;
+         display:flex; flex-direction:column; align-items:center; padding:2rem; }
+  video { width:300px; height:300px; border:2px solid white; border-radius:8px; margin-bottom:1rem; }
+  button { padding:1rem; font-size:1.2rem; }
+</style>
+</head>
+<body onload="activarCamara()">
+  <h2>Hola <span id="nombreUsuario"></span>, tómate una selfie</h2>
+  <video id="camera" autoplay playsinline muted></video>
+  <canvas id="snapshot" width="224" height="224" style="display:none;"></canvas>
+  <button onclick="tomarFoto()">Tomar Selfie</button>
+  <script>
+    document.getElementById('nombreUsuario').innerText = localStorage.getItem('nombre') || '';
+    async function activarCamara() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({video:true});
+        document.getElementById('camera').srcObject = stream;
+      } catch (err) {
+        alert('Error cámara: ' + err.message);
+      }
+    }
+    function tomarFoto() {
+      const video = document.getElementById('camera');
+      const canvas = document.getElementById('snapshot');
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video,0,0, canvas.width, canvas.height);
+      localStorage.setItem('foto', canvas.toDataURL());
+      window.location.href = 'stats.html';
+    }
+  </script>
+</body>
+</html>
