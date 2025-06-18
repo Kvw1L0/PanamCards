@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"/><title>Tus Stats</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<style>
+  body { margin:0; background:black; color:white; font-family:sans-serif;
+         display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh;}
+  input { padding:0.5rem; font-size:1rem; margin:0.5rem;}
+  button { padding:1rem; font-size:1rem; background:gold; border:none; border-radius:5px; cursor:pointer;}
+</style></head>
+<body>
+<h2>Hola <span id="nombreStat"></span>, ingresa tus resultados</h2>
+<input id="d1" type="number" placeholder="Desafío 1"/>
+<input id="d2" type="number" placeholder="Desafío 2"/>
+<input id="d3" type="number" placeholder="Desafío 3"/>
+<button onclick="guardarStats()">Siguiente</button>
+<script>
+document.getElementById('nombreStat').innerText = localStorage.getItem('nombre') || '';
+function guardarStats(){
+  localStorage.setItem('d1',document.getElementById('d1').value);
+  localStorage.setItem('d2',document.getElementById('d2').value);
+  localStorage.setItem('d3',document.getElementById('d3').value);
+  location.href='final.html';
+}
+</script>
+</body></html>

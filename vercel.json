@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "builds":[
+   {"src":"index.html","use":"@vercel/static"},
+   {"src":"selfie.html","use":"@vercel/static"},
+   {"src":"stats.html","use":"@vercel/static"},
+   {"src":"final.html","use":"@vercel/static"},
+   {"src":"panamcard.png","use":"@vercel/static"}
+  ],
+  "routes":[{"src":"/(.*)","dest":"/$1"}]
+}
