@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<title>Tarjeta Final</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+  body { margin:0; background:black; display:flex; flex-direction:column; align-items:center; font-family:sans-serif; color:white; }
+  canvas { background:#000; margin-top:1rem; }
+  button { margin:0.5rem; padding:0.5rem 1rem; border:none; border-radius:5px; font-weight:bold; cursor:pointer; }
+  #shareBtn { background:#e1306c; color:white; }
+  #downloadBtn { background:gold; color:black; }
+</style>
+</head>
+<body>
+  <canvas id="cardcanvas" width="492" height="764"></canvas>
+  <button id="shareBtn" onclick="shareStory()">Compartir en Instagram</button>
+  <button id="downloadBtn" onclick="downloadCard()">Descargar</button>
+  <script>
+    function drawCard() {
+      const cv = document.getElementById('cardcanvas');
+      const ctx = cv.getContext('2d');
+      const bg = new Image();
+      bg.src = 'card_panam_bg_v2.png';
+      bg.onload = () => {
+        ctx.drawImage(bg, 0, 0, 492, 764);
+        const avatar = new Image();
+        avatar.src = localStorage.getItem('foto');
+        avatar.onload = () => {
+          // Avatar rectangle
+          ctx.drawImage(avatar, 123, 91, 246, 214);
+          // Stats
+          ctx.fillStyle = 'white';
+          ctx.font = 'bold 32px Montserrat';
+          ctx.textAlign = 'right';
+          ctx.fillText('FRZ', 172, 443);
+          ctx.fillText('VEL', 172, 520);
+          ctx.fillText('RES', 172, 596);
+          ctx.textAlign = 'left';
+          ctx.fillText(localStorage.getItem('d1'), 320, 443);
+          ctx.fillText(localStorage.getItem('d2'), 320, 520);
+          ctx.fillText(localStorage.getItem('d3'), 320, 596);
+        };
+      };
+    }
+    function shareStory() {
+      const cv = document.getElementById('cardcanvas');
+      cv.toBlob(blob => {
+        const reader = new FileReader();
+        reader.onload = () => {
+          window.location.href = 'instagram://story-camera?background_image=' + encodeURIComponent(reader.result);
+        };
+        reader.readAsDataURL(blob);
+      });
+    }
+    function downloadCard() {
+      const cv = document.getElementById('cardcanvas');
+      const a = document.createElement('a');
+      a.download = 'tarjeta.png';
+      a.href = cv.toDataURL();
+      a.click();
+    }
+    window.onload = drawCard;
+  </script>
+</body>
+</html>
