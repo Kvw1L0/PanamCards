@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <title>Tarjeta Final</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin:0; padding:0; }
+    body { background:black; display:flex; flex-direction:column; align-items:center; color:white; font-family:sans-serif; }
+    .card-container { width:90vw; max-width:400px; aspect-ratio:1/1; position:relative; background:url('panamcard.png') center/cover no-repeat; }
+    /* Avatar rectangle */
+    .avatar-wrapper { position:absolute; top:12%; left:50%; width:50%; height:28%; overflow:hidden; transform:translateX(-50%); }
+    .avatar-wrapper img { width:100%; height:100%; object-fit:cover; }
+    /* Stats alignment */
+    .stat-label, .stat-value { position:absolute; color:white; font-size:20px; font-weight:bold; }
+    #label1 { top:58%; left:35%; text-align:right; }
+    #value1 { top:58%; left:65%; }
+    #label2 { top:68%; left:35%; text-align:right; }
+    #value2 { top:68%; left:65%; }
+    #label3 { top:78%; left:35%; text-align:right; }
+    #value3 { top:78%; left:65%; }
+    button { margin:0.5rem; padding:0.5rem 1rem; border:none; border-radius:5px; font-weight:bold; cursor:pointer; }
+    #shareBtn { background:#e1306c; color:white; }
+    #downloadBtn { background:gold; color:black; }
+  </style>
+</head>
+<body>
+  <div class="card-container">
+    <div class="avatar-wrapper"><img id="avatar" src="" alt="Avatar"/></div>
+    <div id="label1" class="stat-label">FRZ</div><div id="value1" class="stat-value"></div>
+    <div id="label2" class="stat-label">VEL</div><div id="value2" class="stat-value"></div>
+    <div id="label3" class="stat-label">RES</div><div id="value3" class="stat-value"></div>
+  </div>
+  <button id="shareBtn" onclick="shareStory()">Compartir en Instagram</button>
+  <button id="downloadBtn" onclick="downloadCard()">Descargar</button>
+  <canvas id="snapshot" width="224" height="224" style="display:none;"></canvas>
+  <script>
+    // Render photo and stats without segmentation
+    document.getElementById('avatar').src = localStorage.getItem('foto');
+    document.getElementById('value1').innerText = localStorage.getItem('d1');
+    document.getElementById('value2').innerText = localStorage.getItem('d2');
+    document.getElementById('value3').innerText = localStorage.getItem('d3');
+    // Show card
+    document.querySelector('.card-container').style.opacity = '1';
+    function shareStory() {
+      html2canvas(document.querySelector('.card-container')).then(canvas => {
+        canvas.toBlob(blob => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            window.location.href = 'instagram://story-camera?background_image=' + encodeURIComponent(reader.result);
+          };
+          reader.readAsDataURL(blob);
+        });
+      });
+    }
+    function downloadCard() {
+      html2canvas(document.querySelector('.card-container')).then(canvas => {
+        const a = document.createElement('a');
+        a.download = 'tarjeta.png';
+        a.href = canvas.toDataURL();
+        a.click();
+      });
+    }
+  </script>
+</body>
+</html>
