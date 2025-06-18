@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"/><title>Tarjeta Final</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.11.0"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.2.0"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*{box-sizing:border-box;}
+body{margin:0;background:#000;display:flex;flex-direction:column;align-items:center;font-family:'Montserrat',sans-serif;color:#fff;padding:1rem;}
+#preloader{position:fixed;top:0;left:0;width:100vw;height:100vh;background:#000;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;z-index:999;}
+.ball{width:40px;height:24px;background:url('https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Rugby_ball_Transparent.svg/1024px-Rugby_ball_Transparent.svg.png') no-repeat center/contain;position:absolute;animation:float 3s ease-in-out forwards;}
+@keyframes float{0%{transform:translateY(100vh) rotate(0deg);opacity:1;}100%{transform:translateY(-100vh) rotate(360deg);opacity:0;}}
+.card-container{width:90vw;max-width:400px;aspect-ratio:1/1;position:relative;}
+#card{width:100%;height:100%;background:url('panamcard.png') center/cover no-repeat;position:relative;opacity:0;transform:translateY(20px) scale(0.95);transition:all 0.5s ease-out;}
+#card.show{opacity:1;transform:translateY(0) scale(1);}
+.avatar-wrapper{position:absolute;top:20%;left:50%;width:25%;aspect-ratio:1/1;overflow:hidden;transform:translateX(-50%);}
+.avatar-wrapper img{width:100%;height:100%;object-fit:cover;}
+.stat-label,.stat-value{position:absolute;color:#fff;font-size:4vw;font-weight:bold;}
+#label1{top:60%;left:35%;transform:translateX(-100%);}
+#value1{top:60%;left:65%;}
+#label2{top:70%;left:35%;transform:translateX(-100%);}
+#value2{top:70%;left:65%;}
+#label3{top:80%;left:35%;transform:translateX(-100%);}
+#value3{top:80%;left:65%;}
+button{margin:0.5rem;padding:0.5rem 1rem;border:none;border-radius:5px;font-weight:bold;cursor:pointer;}
+#shareBtn{background:#e1306c;color:#fff;}#downloadBtn{background:#FFD700;color:#000;}
+</style></head><body onload="iniciar()">
+<div id="preloader"></div>
+<div class="card-container"><div id="card">
+  <div class="avatar-wrapper"><img id="avatar" src="" alt="Avatar"/></div>
+  <div id="label1" class="stat-label">FRZ</div><div id="value1" class="stat-value"></div>
+  <div id="label2" class="stat-label">VEL</div><div id="value2" class="stat-value"></div>
+  <div id="label3" class="stat-label">RES</div><div id="value3" class="stat-value"></div>
+</div></div>
+<button id="shareBtn" onclick="shareStory()">Compartir en Instagram</button>
+<button id="downloadBtn" onclick="descargar()">Descargar</button>
+<canvas id="snapshot" width="224" height="224" style="display:none;"></canvas>
+<script>
+async function iniciar(){
+  const pre=document.getElementById('preloader');
+  for(let i=0;i<12;i++){const b=document.createElement('div');b.className='ball';b.style.left=Math.random()*100+'vw';b.style.top=Math.random()*100+'vh';pre.appendChild(b);}
+  const net=await bodyPix.load();
+  setTimeout(()=>{pre.style.display='none';render(net);},2000);
+}
+async function render(net){
+  const data=localStorage.getItem('foto'),img=new Image();
+  img.crossOrigin='anonymous';img.src=data;
+  img.onload=async()=>{
+    const c=document.getElementById('snapshot'),ctx=c.getContext('2d');
+    ctx.clearRect(0,0,c.width,c.height);
+    ctx.drawImage(img,0,0,c.width,c.height);
+    const seg=await net.segmentPerson(c,{segmentationThreshold:0.7});
+    const imd=ctx.getImageData(0,0,c.width,c.height);
+    for(let i=0;i<imd.data.length;i+=4)if(!seg.data[i/4])imd.data[i+3]=0;
+    ctx.putImageData(imd,0,0);
+    document.getElementById('avatar').src=c.toDataURL();
+  };
+  document.getElementById('value1').innerText=localStorage.getItem('d1');
+  document.getElementById('value2').innerText=localStorage.getItem('d2');
+  document.getElementById('value3').innerText=localStorage.getItem('d3');
+  setTimeout(()=>document.getElementById('card').classList.add('show'),100);
+}
+function shareStory(){
+  html2canvas(document.getElementById('card')).then(canvas=>canvas.toBlob(blob=>{
+    const file=new File([blob],'tarjeta.png',{type:'image/png'});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      navigator.share({files:[file],title:'Tarjeta Panam',text:'Mi tarjeta de leyenda 🏉'});
+    } else {
+      alert('Selecciona compartir en Instagram en la lista de apps.');
+    }
+  }));
+}
+function descargar(){
+  html2canvas(document.getElementById('card')).then(c=>{const a=document.createElement('a');a.download='tarjeta.png';a.href=c.toDataURL();a.click();});
+}
+</script>
+</body></html>
