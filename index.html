@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paso 1 - Nombre</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+<h1>Paso 1: Ingresa tu nombre</h1>
+<form id="nameForm">
+  <input type="text" id="nameInput" placeholder="Nombre" required>
+  <button type="submit">Siguiente</button>
+</form>
+</div>
+<script>
+document.getElementById('nameForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  localStorage.setItem('panam_name', document.getElementById('nameInput').value);
+  window.location='selfie.html';
+});
+</script>
+</body>
+</html>

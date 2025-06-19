@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Paso 2 - Selfie</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+<h1>Paso 2: Sube tu selfie</h1>
+<form id="selfieForm">
+  <input type="file" id="selfieInput" accept="image/*" required>
+  <button type="submit">Siguiente</button>
+</form>
+</div>
+<script>
+document.getElementById('selfieForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var file = document.getElementById('selfieInput').files[0];
+  var reader = new FileReader();
+  reader.onload = function(){
+    localStorage.setItem('panam_selfie', reader.result);
+    window.location='stats.html';
+  };
+  reader.readAsDataURL(file);
+});
+</script>
+</body>
+</html>
