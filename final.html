@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panam Card - Final</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="panam">
+  <div class="app">
+    <h1>Tu Tarjeta Panam</h1>
+<canvas id="cardCanvas" width="320" height="400"></canvas>
+<a id="downloadLink" download="panam_card.png">Descargar</a>
+  </div>
+  <script>
+window.addEventListener('load', () => {
+  const canvas = document.getElementById('cardCanvas');
+  const ctx = canvas.getContext('2d');
+  const bg = new Image(); bg.src = 'panamcard.png';
+  bg.onload = () => {
+    ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#fff'; ctx.font = 'bold 20px Poppins, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillText(localStorage.getItem('panam_name') || '', canvas.width/2, 60);
+    const selfie = new Image(); selfie.onload = () => {
+      const ss=80, sx=(canvas.width-ss)/2, sy=80;
+      ctx.save(); ctx.beginPath(); ctx.rect(sx, sy, ss, ss); ctx.clip();
+      ctx.drawImage(selfie, sx, sy, ss, ss); ctx.restore();
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 16px Poppins, sans-serif'; ctx.textAlign='left';
+      const leftX=20, rightX=canvas.width-20, y0=220;
+      [['FRZ', localStorage.getItem('panam_frz')],
+       ['VEL', localStorage.getItem('panam_vel')],
+       ['RES', localStorage.getItem('panam_res')]].forEach((item, i) => {
+        ctx.fillText(item[0], leftX, y0 + i*30);
+        ctx.textAlign='right'; ctx.fillText(item[1], rightX, y0 + i*30);
+        ctx.textAlign='left';
+      });
+      document.getElementById('downloadLink').href = canvas.toDataURL();
+    };
+    selfie.src = localStorage.getItem('panam_selfie');
+  };
+});
+</script>
+</body>
+</html>
