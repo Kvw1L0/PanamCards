@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<title>Tarjeta Final</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet"/>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:black;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;color:white;font-family:'Roboto',sans-serif;}
+#card-wrapper{position:relative;width:80vw;max-width:600px;}
+#cardcanvas{width:100%;height:auto;}
+#selfie-preview{position:absolute;top:230px;left:156px;width:290px;height:290px;overflow:hidden;border-radius:8px;}
+#selfie-preview img{width:100%;height:100%;object-fit:cover;}
+.controls{margin-top:1rem;display:flex;gap:1rem;}
+button{padding:0.5rem 1rem;border:none;border-radius:5px;font-size:1rem;cursor:pointer;}
+#shareBtn{background:#e1306c;color:white;}
+#downloadBtn{background:gold;color:black;}
+</style>
+</head>
+<body>
+  <div id="card-wrapper">
+    <canvas id="cardcanvas" width="600" height="1000"></canvas>
+    <div id="selfie-preview"><img id="avatar" src="" alt="selfie"/></div>
+  </div>
+  <div class="controls">
+    <button id="shareBtn" onclick="shareStory()">Compartir en Instagram</button>
+    <button id="downloadBtn" onclick="downloadCard()">Descargar</button>
+  </div>
+<script>
+document.fonts.ready.then(drawCard);
+function drawCard(){
+  const cv=document.getElementById('cardcanvas'),ctx=cv.getContext('2d');
+  const bg=new Image(); bg.src='panamcardClean_600x1000.png';
+  bg.onload=()=>{
+    ctx.drawImage(bg,0,0,cv.width,cv.height);
+    const avatarSrc=localStorage.getItem('foto');
+    document.getElementById('avatar').src=avatarSrc;
+    const avatar=new Image(); avatar.src=avatarSrc;
+    avatar.onload=()=>{
+      ctx.drawImage(avatar,156,230,290,290);
+      ctx.fillStyle='white';
+      ctx.font='700 28px Roboto';
+      ctx.textAlign='right';
+      // labels
+      ctx.fillText('FRZ', 280, 680);
+      ctx.fillText('VEL', 280, 745);
+      ctx.fillText('RES', 280, 813);
+      // stats
+      ctx.textAlign='left';
+      ctx.fillText(localStorage.getItem('d1'), 320, 680);
+      ctx.fillText(localStorage.getItem('d2'), 320, 745);
+      ctx.fillText(localStorage.getItem('d3'), 320, 813);
+    };
+  };
+}
+function shareStory(){
+  html2canvas(document.getElementById('card-wrapper')).then(canvas=>canvas.toBlob(blob=>{const r=new FileReader();r.onload=()=>{location='instagram://story-camera?background_image='+encodeURIComponent(r.result)};r.readAsDataURL(blob);}));}
+function downloadCard(){
+  html2canvas(document.getElementById('card-wrapper')).then(canvas=>{const a=document.createElement('a');a.download='tarjeta.png';a.href=canvas.toDataURL();a.click();});}
+</script>
+</body>
+</html>
