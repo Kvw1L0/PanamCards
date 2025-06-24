@@ -3,6 +3,37 @@
   <title>Tarjeta Final</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet"/>
+  <!-- dentro del <head>, justo antes de tu propio script -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+<script>
+function drawCard() {
+  const cv = document.getElementById('cardcanvas'),
+        ctx = cv.getContext('2d');
+
+  // 1) Fondo y selfie (igual que antes) …
+  //    … después de dibujar bg y avatar:
+
+  // 2) DIBUJAR MARCO DORADO CON GLOW
+  ctx.save();
+  ctx.lineWidth   = 8;
+  ctx.strokeStyle = 'gold';
+  ctx.shadowBlur  = 20;
+  ctx.shadowColor = 'gold';
+  ctx.strokeRect(4, 4, cv.width - 8, cv.height - 8);
+  ctx.restore();
+
+  // 3) ESTALLIDO DE CONFETTI
+  //    Se dispara una sola vez tras renderizar la tarjeta
+  confetti({
+    particleCount: 100,
+    spread: 60,
+    origin: { y: 0.4 }
+  });
+}
+
+// …
+</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
