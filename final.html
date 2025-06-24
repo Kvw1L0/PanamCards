@@ -47,7 +47,7 @@
         avatar.src = localStorage.getItem('foto');
         avatar.onload = () => {
           const baseSize = 200,
-                scale    = 3,
+                scale    = 2,
                 aw       = baseSize * scale,
                 ah       = baseSize * scale,
                 ax       = (cv.width - aw) / 2,
@@ -61,7 +61,7 @@
                 ofs     = 20,
                 lx      = centerX - ofs,
                 vx      = centerX + ofs,
-                y0      = 800,
+                y0      = 900,
                 y1      = y0 + 50,
                 y2      = y1 + 50;
           ctx.textAlign = 'right';
