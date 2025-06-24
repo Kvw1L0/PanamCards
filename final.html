@@ -48,7 +48,7 @@
         avatar.src = localStorage.getItem('foto');
         avatar.onload = () => {
           const baseSize = 200,
-                scale    = 2,
+                scale    = 2.5,
                 aw       = baseSize * scale,
                 ah       = baseSize * scale,
                 ax       = (cv.width - aw) / 2,
@@ -66,9 +66,9 @@
                 y1      = y0 + 60,
                 y2      = y1 + 60;
           ctx.textAlign = 'right';
-          ctx.fillText('FRZ', lx, y0);
-          ctx.fillText('VEL', lx, y1);
-          ctx.fillText('RES', lx, y2);
+          ctx.fillText('FUERZA', lx, y0);
+          ctx.fillText('VELOCIDD', lx, y1);
+          ctx.fillText('RESISTENCIA', lx, y2);
           ctx.textAlign = 'left';
           ctx.fillText(localStorage.getItem('d1'), vx, y0);
           ctx.fillText(localStorage.getItem('d2'), vx, y1);
