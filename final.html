@@ -41,20 +41,13 @@
         ctx.drawImage(bg, 0, 0, cv.width, cv.height);
 
         // 2) Marco dorado con glow
-        ctx.save();
-        ctx.lineWidth   = 8;
-        ctx.strokeStyle = 'gold';
-        ctx.shadowBlur  = 20;
-        ctx.shadowColor = 'gold';
-        ctx.strokeRect(4, 4, cv.width - 8, cv.height - 8);
-        ctx.restore();
-
+        
         // 3) Selfie (30% más grande, 30px más abajo)
         const avatar = new Image();
         avatar.src = localStorage.getItem('foto');
         avatar.onload = () => {
           const baseSize = 200,
-                scale    = 1.5,
+                scale    = 3,
                 aw       = baseSize * scale,
                 ah       = baseSize * scale,
                 ax       = (cv.width - aw) / 2,
@@ -68,13 +61,13 @@
                 ofs     = 20,
                 lx      = centerX - ofs,
                 vx      = centerX + ofs,
-                y0      = 700,
-                y1      = y0 + 80,
-                y2      = y1 + 80;
+                y0      = 800,
+                y1      = y0 + 50,
+                y2      = y1 + 50;
           ctx.textAlign = 'right';
-          ctx.fillText('FRZ', lx, y0);
-          ctx.fillText('VEL', lx, y1);
-          ctx.fillText('RES', lx, y2);
+          ctx.fillText('FUERZA', lx, y0);
+          ctx.fillText('VELOCIDAD', lx, y1);
+          ctx.fillText('RESISTENCIA', lx, y2);
           ctx.textAlign = 'left';
           ctx.fillText(localStorage.getItem('d1'), vx, y0);
           ctx.fillText(localStorage.getItem('d2'), vx, y1);
