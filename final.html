@@ -58,7 +58,7 @@
           ctx.fillStyle = 'white';
           ctx.font       = '700 40px Roboto';
           const centerX = cv.width / 2,
-                ofs     = 20 ,
+                ofs     = 20,
                 lx      = centerX - ofs,
                 vx      = centerX + ofs,
                 y0      = 850,
@@ -68,7 +68,7 @@
           ctx.fillText('FUERZA', lx, y0);
           ctx.fillText('VELOCIDAD', lx, y1);
           ctx.fillText('RESISTENCIA', lx, y2);
-          ctx.textAlign = 'right';
+          ctx.textAlign = 'left';
           ctx.fillText(localStorage.getItem('d1'), vx, y0);
           ctx.fillText(localStorage.getItem('d2'), vx, y1);
           ctx.fillText(localStorage.getItem('d3'), vx, y2);
