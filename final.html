@@ -1,40 +1,12 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="UTF-8"/>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
   <title>Tarjeta Final</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet"/>
-  <!-- dentro del <head>, justo antes de tu propio script -->
-<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-
-<script>
-function drawCard() {
-  const cv = document.getElementById('cardcanvas'),
-        ctx = cv.getContext('2d');
-
-  // 1) Fondo y selfie (igual que antes) …
-  //    … después de dibujar bg y avatar:
-
-  // 2) DIBUJAR MARCO DORADO CON GLOW
-  ctx.save();
-  ctx.lineWidth   = 8;
-  ctx.strokeStyle = 'gold';
-  ctx.shadowBlur  = 20;
-  ctx.shadowColor = 'gold';
-  ctx.strokeRect(4, 4, cv.width - 8, cv.height - 8);
-  ctx.restore();
-
-  // 3) ESTALLIDO DE CONFETTI
-  //    Se dispara una sola vez tras renderizar la tarjeta
-  confetti({
-    particleCount: 100,
-    spread: 60,
-    origin: { y: 0.4 }
-  });
-}
-
-// …
-</script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
   <style>
     * { margin:0; padding:0; box-sizing:border-box; }
     body { background:black; display:flex; flex-direction:column; align-items:center; justify-content:center; height:100vh; color:white; font-family:'Roboto',sans-serif; }
@@ -45,7 +17,8 @@ function drawCard() {
     #shareBtn { background:#e1306c; color:white; }
     #downloadBtn { background:gold; color:black; }
   </style>
-</head><body>
+</head>
+<body>
   <div id="card-wrapper">
     <canvas id="cardcanvas" width="600" height="1000"></canvas>
   </div>
@@ -58,48 +31,61 @@ function drawCard() {
     document.fonts.ready.then(drawCard);
 
     function drawCard() {
-      const cv = document.getElementById('cardcanvas'),
+      const cv  = document.getElementById('cardcanvas'),
             ctx = cv.getContext('2d');
 
-      // Fondo limpio
+      // 1) Dibuja fondo limpio
       const bg = new Image();
       bg.src = 'panamcardClean_600x1000.png';
       bg.onload = () => {
         ctx.drawImage(bg, 0, 0, cv.width, cv.height);
 
-        // Selfie: 30% más grande y 30px más abajo
+        // 2) Marco dorado con glow
+        ctx.save();
+        ctx.lineWidth   = 8;
+        ctx.strokeStyle = 'gold';
+        ctx.shadowBlur  = 20;
+        ctx.shadowColor = 'gold';
+        ctx.strokeRect(4, 4, cv.width - 8, cv.height - 8);
+        ctx.restore();
+
+        // 3) Selfie (30% más grande, 30px más abajo)
         const avatar = new Image();
         avatar.src = localStorage.getItem('foto');
         avatar.onload = () => {
           const baseSize = 200,
-                scale = 1.5,
-                aw = baseSize * scale,
-                ah = baseSize * scale,
-                ax = (cv.width - aw) / 2,
-                ay = 250;  // 110px original + 30px
+                scale    = 1.3,
+                aw       = baseSize * scale,
+                ah       = baseSize * scale,
+                ax       = (cv.width - aw) / 2,
+                ay       = 110 + 30;
           ctx.drawImage(avatar, ax, ay, aw, ah);
 
-          // Etiquetas y valores: justo debajo de la línea anaranjada
+          // 4) Stats (movidos justo bajo línea naranja)
           ctx.fillStyle = 'white';
-          ctx.font = '700 40px Roboto';
-
+          ctx.font       = '700 28px Roboto';
           const centerX = cv.width / 2,
-                offset = 20,
-                labelX = centerX - offset,
-                valueX = centerX + offset,
-                y0 = 700, // 550px para que arranque justo abajo de la línea
-                y1 = y0 + 80,
-                y2 = y1 + 80;
-
+                ofs     = 10,
+                lx      = centerX - ofs,
+                vx      = centerX + ofs,
+                y0      = 550,
+                y1      = y0 + 80,
+                y2      = y1 + 80;
           ctx.textAlign = 'right';
-          ctx.fillText('FRZ', labelX, y0);
-          ctx.fillText('VEL', labelX, y1);
-          ctx.fillText('RES', labelX, y2);
-
+          ctx.fillText('FRZ', lx, y0);
+          ctx.fillText('VEL', lx, y1);
+          ctx.fillText('RES', lx, y2);
           ctx.textAlign = 'left';
-          ctx.fillText(localStorage.getItem('d1'), valueX, y0);
-          ctx.fillText(localStorage.getItem('d2'), valueX, y1);
-          ctx.fillText(localStorage.getItem('d3'), valueX, y2);
+          ctx.fillText(localStorage.getItem('d1'), vx, y0);
+          ctx.fillText(localStorage.getItem('d2'), vx, y1);
+          ctx.fillText(localStorage.getItem('d3'), vx, y2);
+
+          // 5) Estallido de confetti
+          confetti({
+            particleCount: 100,
+            spread: 60,
+            origin: { y: 0.4 }
+          });
         };
       };
     }
@@ -109,7 +95,7 @@ function drawCard() {
         canvas.toBlob(blob => {
           const reader = new FileReader();
           reader.onload = () => {
-            window.location.href = 'instagram://story-camera?background_image=' + encodeURIComponent(reader.result);
+            location.href = 'instagram://story-camera?background_image=' + encodeURIComponent(reader.result);
           };
           reader.readAsDataURL(blob);
         });
@@ -125,4 +111,6 @@ function drawCard() {
       });
     }
   </script>
-</body></html>
+</body>
+</html>
+
