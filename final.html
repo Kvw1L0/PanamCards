@@ -41,22 +41,22 @@
         avatar.src = localStorage.getItem('foto');
         avatar.onload = () => {
           const baseSize = 200,
-                scale = 1.3,
+                scale = 1.5,
                 aw = baseSize * scale,
                 ah = baseSize * scale,
                 ax = (cv.width - aw) / 2,
-                ay = 110 + 60;  // 110px original + 30px
+                ay = 250;  // 110px original + 30px
           ctx.drawImage(avatar, ax, ay, aw, ah);
 
           // Etiquetas y valores: justo debajo de la línea anaranjada
           ctx.fillStyle = 'white';
-          ctx.font = '700 28px Roboto';
+          ctx.font = '700 40px Roboto';
 
           const centerX = cv.width / 2,
                 offset = 10,
                 labelX = centerX - offset,
                 valueX = centerX + offset,
-                y0 = 800, // 550px para que arranque justo abajo de la línea
+                y0 = 700, // 550px para que arranque justo abajo de la línea
                 y1 = y0 + 80,
                 y2 = y1 + 80;
 
